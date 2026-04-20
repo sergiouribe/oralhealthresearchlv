@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Oral Health Research LV — Redesign Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F4EEE3;
+    --paper-2: #EAE2D2;
+    --ink: #1A1714;
+    --ink-soft: #433C33;
+    --rule: #1A1714;
+    --accent: oklch(0.52 0.17 25);
+    --accent-soft: oklch(0.92 0.04 25);
+    --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --sans: "Inter", -apple-system, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--paper); color: var(--ink); font-family: var(--serif); font-optical-sizing: auto; -webkit-font-smoothing: antialiased; }
+  body { line-height: 1.5; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  /* ========== LAYOUT ========== */
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+  @media (max-width: 720px) { .wrap { padding: 0 20px; } }
+
+  /* ========== MASTHEAD ========== */
+  .masthead {
+    border-bottom: 2px solid var(--ink);
+    padding: 18px 0 14px;
+    position: sticky; top: 0; z-index: 40;
+    background: var(--paper);
+  }
+  .mast-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: end;
+    gap: 24px;
+  }
+  .mast-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .mast-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 20;
+  }
+  .mast-title em { font-style: italic; font-weight: 400; color: var(--accent); }
+  .mast-nav {
+    display: flex; gap: 28px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .mast-nav a { padding-bottom: 2px; border-bottom: 1px solid transparent; transition: border-color .15s; }
+  .mast-nav a:hover { border-bottom-color: var(--ink); }
+  .mast-nav a.lv { color: var(--accent); }
+
+  /* ========== HERO ========== */
+  .hero {
+    padding: 80px 0 64px;
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .kicker::before {
+    content: ""; display: inline-block; width: 28px; height: 1px; background: var(--ink);
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-variation-settings: "opsz" 60;
+    font-size: clamp(42px, 6vw, 82px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    text-wrap: pretty;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .hero-lede {
+    font-size: 20px;
+    line-height: 1.45;
+    max-width: 52ch;
+    font-variation-settings: "opsz" 24;
+    color: var(--ink-soft);
+  }
+  .hero-lede strong { color: var(--ink); font-weight: 500; }
+
+  .hero-stat {
+    border-left: 2px solid var(--accent);
+    padding-left: 28px;
+    margin-top: 48px;
+  }
+  .hero-stat .num {
+    font-family: var(--serif);
+    font-weight: 200;
+    font-variation-settings: "opsz" 60;
+    font-size: clamp(80px, 12vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+  }
+  .hero-stat .num sup { font-size: 0.4em; vertical-align: top; }
+  .hero-stat .cap {
+    font-size: 17px;
+    line-height: 1.4;
+    margin-top: 8px;
+    max-width: 38ch;
+  }
+  .hero-stat .src {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 14px;
+  }
+
+  .hero-cta {
+    margin-top: 48px;
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 22px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all .15s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.primary { background: var(--ink); color: var(--paper); }
+  .btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn::after { content: "→"; font-family: var(--serif); font-size: 14px; }
+
+  /* ========== SECTION HEADERS ========== */
+  .section { padding: 96px 0; border-bottom: 1px solid var(--ink); }
+  .section-head {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 48px;
+    margin-bottom: 56px;
+    align-items: baseline;
+  }
+  @media (max-width: 720px) { .section-head { grid-template-columns: 1fr; gap: 16px; } }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 10px;
+    border-top: 1px solid var(--ink);
+    display: flex; justify-content: space-between;
+  }
+  .section-label .no { color: var(--accent); }
+  .section-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-variation-settings: "opsz" 48;
+    font-size: clamp(34px, 4.5vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* ========== THESIS (why) ========== */
+  .thesis-body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 48px;
+  }
+  @media (max-width: 720px) { .thesis-body { grid-template-columns: 1fr; } }
+  .thesis-aside {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .thesis-prose {
+    font-size: 19px;
+    line-height: 1.55;
+    font-variation-settings: "opsz" 20;
+    max-width: 64ch;
+  }
+  .thesis-prose p + p { margin-top: 1em; }
+  .thesis-prose .drop-cap::first-letter {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-variation-settings: "opsz" 60;
+    font-size: 5.4em;
+    float: left;
+    line-height: 0.85;
+    padding: 0.08em 0.1em 0 0;
+    color: var(--accent);
+  }
+  .pull {
+    border-top: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    padding: 24px 0;
+    margin: 40px 0;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-variation-settings: "opsz" 48;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+  .pull em { color: var(--accent); font-style: italic; }
+
+  /* ========== CHART ========== */
+  .chart-figure {
+    margin-top: 56px;
+    border: 1px solid var(--ink);
+    background: var(--paper-2);
+    padding: 32px;
+  }
+  .chart-figure .fig-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 24px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .chart-figure .fig-title {
+    font-family: var(--serif); font-weight: 500; font-size: 18px;
+    letter-spacing: 0; text-transform: none;
+  }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .chart-caption {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* ========== WHAT WE DO — PILLARS ========== */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--ink);
+  }
+  @media (max-width: 900px) { .pillars { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .pillars { grid-template-columns: 1fr; } }
+  .pillar {
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 32px;
+    min-height: 280px;
+    display: flex; flex-direction: column;
+    transition: background .2s;
+  }
+  .pillar:hover { background: var(--paper-2); }
+  .pillar .no {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .pillar h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-variation-settings: "opsz" 32;
+    font-size: 28px;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+  }
+  .pillar h3 em { font-style: italic; color: var(--accent); }
+  .pillar p {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin-bottom: auto;
+  }
+  .pillar .tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 20px;
+  }
+  .pillar .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border: 1px solid var(--ink);
+  }
+
+  /* ========== POLICY IMPACT TIMELINE ========== */
+  .timeline {
+    position: relative;
+  }
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 48px;
+    padding: 32px 0;
+    border-top: 1px solid var(--ink);
+    align-items: start;
+  }
+  .timeline-row:last-child { border-bottom: 1px solid var(--ink); }
+  .timeline-row:hover { background: rgba(26,23,20,0.02); }
+  @media (max-width: 720px) { .timeline-row { grid-template-columns: 1fr; gap: 12px; } }
+  .timeline-year {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-variation-settings: "opsz" 48;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    position: sticky; top: 100px;
+  }
+  .timeline-year .badge {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 6px;
+  }
+  .timeline-content h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    font-variation-settings: "opsz" 24;
+    max-width: 60ch;
+  }
+  .timeline-content p {
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 72ch;
+  }
+  .timeline-content .meta {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 10px;
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+
+  /* ========== PROJECTS GRID ========== */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--ink);
+  }
+  @media (max-width: 720px) { .projects-grid { grid-template-columns: 1fr; } }
+  .project {
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 28px;
+    display: flex; flex-direction: column;
+    min-height: 220px;
+  }
+  .project .acro {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex; justify-content: space-between;
+  }
+  .project h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .project .role {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: auto;
+  }
+  .project .dates {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--ink);
+  }
+
+  /* ========== RESEARCHERS ========== */
+  .people {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+  @media (max-width: 800px) { .people { grid-template-columns: 1fr; gap: 48px; } }
+  .person { border-top: 2px solid var(--ink); padding-top: 24px; }
+  .person .portrait {
+    aspect-ratio: 4/5;
+    background: var(--paper-2);
+    border: 1px solid var(--ink);
+    position: relative;
+    margin-bottom: 20px;
+    background-image: repeating-linear-gradient(135deg, transparent 0 14px, rgba(26,23,20,0.05) 14px 15px);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .person .portrait::after {
+    content: attr(data-label);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 12px; left: 12px;
+    background: var(--paper);
+    padding: 4px 8px;
+    border: 1px solid var(--ink);
+  }
+  .person h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 32px;
+    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 32;
+    margin-bottom: 4px;
+  }
+  .person .title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .person .bio {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+    max-width: 48ch;
+  }
+  .person .creds {
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    border-top: 1px solid var(--ink);
+    padding-top: 16px;
+  }
+  .person .creds dt {
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-size: 10px;
+    margin-top: 10px;
+  }
+  .person .creds dt:first-child { margin-top: 0; }
+  .person .creds dd { margin-bottom: 4px; }
+  .person .socials { display: flex; gap: 8px; margin-top: 16px; }
+  .person .socials a {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border: 1px solid var(--ink);
+  }
+  .person .socials a:hover { background: var(--ink); color: var(--paper); }
+
+  /* ========== PUBS FEED ========== */
+  .pubs-feed {
+    font-family: var(--serif);
+  }
+  .pub {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 32px;
+    padding: 24px 0;
+    border-top: 1px solid var(--ink);
+    align-items: baseline;
+  }
+  @media (max-width: 720px) { .pub { grid-template-columns: 60px 1fr; gap: 16px; } .pub .venue { grid-column: 2; margin-top: 6px; } }
+  .pub:last-child { border-bottom: 1px solid var(--ink); }
+  .pub:hover { background: rgba(26,23,20,0.02); }
+  .pub .yr {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .pub .title {
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    max-width: 64ch;
+  }
+  .pub .title em { font-style: italic; }
+  .pub .authors {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .pub .venue {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  /* ========== DATA / LINKS STRIPE ========== */
+  .stripe {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 0;
+    border-bottom: 1px solid var(--ink);
+  }
+  .stripe .section-label { color: rgba(244,238,227,0.7); border-top-color: var(--paper); }
+  .stripe .section-title { color: var(--paper); }
+  .stripe .section-title em { color: oklch(0.72 0.16 25); }
+  .stripe-links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 56px;
+  }
+  @media (max-width: 900px) { .stripe-links { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .stripe-links { grid-template-columns: 1fr; } }
+  .stripe-link {
+    border-top: 1px solid rgba(244,238,227,0.3);
+    padding-top: 20px;
+  }
+  .stripe-link .k {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: oklch(0.72 0.16 25);
+    margin-bottom: 12px;
+  }
+  .stripe-link h5 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+  .stripe-link p { font-size: 13.5px; color: rgba(244,238,227,0.7); line-height: 1.45; }
+
+  /* ========== FOOTER ========== */
+  footer {
+    padding: 64px 0 48px;
+    background: var(--paper);
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 800px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+  .foot-grid h6 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .foot-grid ul { list-style: none; font-size: 15px; line-height: 1.7; }
+  .foot-grid ul a { border-bottom: 1px solid transparent; }
+  .foot-grid ul a:hover { border-bottom-color: var(--ink); }
+  .colophon {
+    border-top: 1px solid var(--ink);
+    padding-top: 20px;
+    display: flex; justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    flex-wrap: wrap; gap: 12px;
+  }
+
+  /* ========== TWEAKS PANEL ========== */
+  #tweaks {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 280px;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    z-index: 100;
+    display: none;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  #tweaks.visible { display: block; }
+  #tweaks h6 { letter-spacing: 0.12em; text-transform: uppercase; font-size: 11px; margin-bottom: 14px; border-bottom: 1px solid var(--ink); padding-bottom: 8px; }
+  #tweaks .row { margin-bottom: 12px; }
+  #tweaks label { display: block; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; font-size: 10px; }
+  #tweaks .opts { display: flex; gap: 4px; flex-wrap: wrap; }
+  #tweaks .opts button {
+    border: 1px solid var(--ink); background: var(--paper); padding: 6px 10px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer;
+  }
+  #tweaks .opts button.active { background: var(--ink); color: var(--paper); }
+  #tweaks .swatch { width: 16px; height: 16px; display: inline-block; vertical-align: middle; border: 1px solid var(--ink); margin-right: 4px; }
+
+  /* Theme variants driven by data-theme on body */
+  body[data-theme="ink"] { --paper: #F4EEE3; --paper-2: #EAE2D2; --ink: #1A1714; --accent: oklch(0.52 0.17 25); }
+  body[data-theme="clinical"] { --paper: #F7F5F1; --paper-2: #EEEAE0; --ink: #0E1A2B; --accent: oklch(0.48 0.14 258); }
+  body[data-theme="forest"] { --paper: #F1EFE7; --paper-2: #E7E4D7; --ink: #1A2118; --accent: oklch(0.48 0.12 150); }
+  body[data-type="sans"] { --serif: "Inter", -apple-system, sans-serif; }
+
+  /* subtle entrance */
+  .fade-in { opacity: 0; transform: translateY(12px); transition: opacity .8s, transform .8s; }
+  .fade-in.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body data-theme="ink" data-type="serif">
+
+<!-- MASTHEAD -->
+<header class="masthead" data-screen-label="00 Masthead">
+  <div class="wrap mast-grid">
+    <div>
+      <div class="mast-meta">Riga · Est. 2021</div>
+      <div class="mast-title">Oral Health Research <em>LV</em></div>
+    </div>
+    <div></div>
+    <nav class="mast-nav">
+      <a href="#thesis">Thesis</a>
+      <a href="#work">Work</a>
+      <a href="#policy">Policy</a>
+      <a href="#projects">Projects</a>
+      <a href="#people">People</a>
+      <a href="#publications">Publications</a>
+      <a href="#lv" class="lv">LV</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" data-screen-label="01 Hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker"></div>
+      <h1>Caries in children predicts <em>diabetes</em> in adolescents &amp; <em>cardiovascular disease</em> in adults.</h1>
+      <p class="hero-lede">
+        We are oral health researchers improving health through <strong>patient‑centered research</strong> and <strong>evidence implementation</strong>. Dental caries is a global epidemic — Europe suffers the highest burden, and Latvia exemplifies this crisis.
+      </p>
+      <div class="hero-cta">
+        <a href="#thesis" class="btn primary">Read the thesis</a>
+        <a href="#publications" class="btn">Browse publications</a>
+      </div>
+    </div>
+    <aside class="hero-stat">
+      <div class="num">93<sup>%</sup></div>
+      <div class="cap">of Latvian adolescents show visible tooth damage. A preventable epidemic, at the moment of maximum impact and minimum cost.</div>
+      <div class="src">Maldupa et al., Int. Dental Journal, 2021 — DOI 10.1111/idj.12627</div>
+    </aside>
+  </div>
+</section>
+
+<!-- THESIS -->
+<section class="section" id="thesis" data-screen-label="02 Thesis">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span>§ 01 — Thesis</span><span class="no">/ i</span></div>
+      <h2 class="section-title">Why children's teeth are a <em>public‑health leading indicator</em>.</h2>
+    </div>
+    <div class="thesis-body">
+      <aside class="thesis-aside">
+        Children's oral health reveals a nation's future.<br><br>
+        Maximum impact.<br>
+        Minimum cost.<br><br>
+        There is no health<br>without oral health.<br>
+        <span style="color: var(--accent);">— WHO, 2024</span>
+      </aside>
+      <div class="thesis-prose">
+        <p class="drop-cap">Caries today predicts diabetes tomorrow and cardiovascular disease in twenty years. This progression is preventable at the oral health stage — the moment of maximum impact and minimum cost.</p>
+        <p>Countries prioritising children's dental care gain immediate returns: children miss fewer school days and learn more effectively, while parents avoid the <strong>3.5 workdays annually</strong> lost to managing dental emergencies. Long‑term savings follow through lower chronic disease burden and healthier populations.</p>
+
+        <blockquote class="pull">Countries with lower caries prevalence show higher GDP, better educational outcomes, and <em>lower chronic disease burden</em>. Oral health predicts prosperity.</blockquote>
+
+        <p>A population of 1.9 million makes Latvia uniquely suited to rapid national‑scale implementation. Evidence‑based interventions and new technologies like Artificial Intelligence can be evaluated at population scale, then adapted for international contexts.</p>
+
+        <p>We work to close this gap — equipping clinicians with evidence of high‑value healthcare, identifying low‑value care for de‑implementation, providing policymakers with cost‑effectiveness data, and deploying technology to reduce the implementation gap.</p>
+      </div>
+    </div>
+
+    <!-- CHART -->
+    <figure class="chart-figure">
+      <div class="fig-head">
+        <span>Fig. 1</span>
+        <span class="fig-title">Caries prevalence (12‑y/o) vs. GDP per capita — selected nations</span>
+        <span>n = 28</span>
+      </div>
+      <div class="chart" id="chart1"></div>
+      <div class="chart-caption">
+        Plotted: mean DMFT score (lower is better) against log‑GDP per capita. Latvia (highlighted) and its Baltic peers deviate from the fitted trend. Sources: WHO 2023 Oral Health Status Report; World Bank WDI 2023. Visualization schematic — not a peer‑reviewed result.
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section class="section" id="work" data-screen-label="03 Work">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span>§ 02 — What we do</span><span class="no">/ ii</span></div>
+      <h2 class="section-title">Five disciplines, <em>one</em> implementation loop.</h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="no">01 / Research</div>
+        <h3>Oral Health <em>Research</em></h3>
+        <p>Clinical and epidemiological studies with patient‑centred outcomes. National‑scale cohorts, minimally invasive cariology, early childhood caries.</p>
+        <div class="tags"><span class="tag">Epidemiology</span><span class="tag">RCTs</span><span class="tag">Cariology</span></div>
+      </div>
+      <div class="pillar">
+        <div class="no">02 / AI</div>
+        <h3>AI in <em>Dentistry</em></h3>
+        <p>Integrating AI into clinical and public‑health decision making — radiographic caries detection, curriculum design, regulatory standards.</p>
+        <div class="tags"><span class="tag">ML</span><span class="tag">Radiography</span><span class="tag">FDI WP</span></div>
+      </div>
+      <div class="pillar">
+        <div class="no">03 / Data</div>
+        <h3>Data <em>Analysis</em></h3>
+        <p>Interpreting complex oral health data with reproducible, open pipelines. Bayesian inference, causal methods, dataset curation.</p>
+        <div class="tags"><span class="tag">R</span><span class="tag">Python</span><span class="tag">Bayes</span></div>
+      </div>
+      <div class="pillar">
+        <div class="no">04 / Open Science</div>
+        <h3>Open <em>Science</em></h3>
+        <p>Transparent practices that increase research impact, reach, and reproducibility. Pre‑registered protocols, FAIR datasets, open peer review.</p>
+        <div class="tags"><span class="tag">OSF</span><span class="tag">Zenodo</span><span class="tag">Dataverse</span></div>
+      </div>
+      <div class="pillar">
+        <div class="no">05 / Teaching</div>
+        <h3>Teaching &amp; <em>Training</em></h3>
+        <p>Clinical research, evidence‑based practice, cariology, public health, AI in oral health, data analysis — undergraduate to doctoral.</p>
+        <div class="tags"><span class="tag">EBD</span><span class="tag">PhD</span><span class="tag">CPD</span></div>
+      </div>
+      <div class="pillar" style="background: var(--paper-2);">
+        <div class="no">↳ Loop</div>
+        <h3>From bench to <em>policy</em></h3>
+        <p>Every output feeds the next. Evidence → implementation → evaluation → policy. A closed loop that treats Latvia as both a laboratory and a beneficiary.</p>
+        <div class="tags"><span class="tag">Method</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POLICY IMPACT -->
+<section class="section" id="policy" data-screen-label="04 Policy">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span>§ 03 — Policy impact</span><span class="no">/ iii</span></div>
+      <h2 class="section-title">A two‑decade record of <em>standard‑setting</em>.</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-row">
+        <div class="timeline-year">2008<span class="badge">Consensus</span></div>
+        <div class="timeline-content">
+          <h4>Potential of Information Technology in Dental Education</h4>
+          <p>Consensus document from the European Association of Dental Education guiding IT integration in dental curricula via e‑learning, simulations, and assessments. Led by Nikos Mattheos, with Dr Uribe among contributors.</p>
+          <div class="meta"><span>EADE · DOI 10.1111/j.1600‑0579.2007.00483.x</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-year">2014<span class="badge">National</span></div>
+        <div class="timeline-content">
+          <h4>Latvian National Guideline for Fluoride Use</h4>
+          <p>Establishes national standards for caries prevention — water fluoridation, topical fluoride products, school programs. Co‑authored by Profs. Maldupa &amp; Uribe; endorsed by the Latvian Dental Association.</p>
+          <div class="meta"><span>LZA · Ministry of Health</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-year">2023<span class="badge">Survey</span></div>
+        <div class="timeline-content">
+          <h4>National Oral Health Survey · 3,943 adolescents</h4>
+          <p>Only 14% of 12‑year‑olds caries‑free. D3MFT 2.3 at age 12, 4.4 at age 15 — exceeding European averages. Strong associations with inadequate fluoride toothpaste use, rural residence, and daily sugary drink consumption.</p>
+          <div class="meta"><span>SPKC 2022–2023</span><span>Baseline for policy dev.</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-year">2023<span class="badge">Policy</span></div>
+        <div class="timeline-content">
+          <h4>Child Dental Neglect — Legal Protections Compendium</h4>
+          <p>Compiles oral health profiles across 26 countries and Hong Kong SAR. 25/26 have general neglect laws; only 2 have dental‑specific. Latvia &amp; Chile documentation contributed by Maldupa &amp; Uribe.</p>
+          <div class="meta"><span>Frontiers in Oral Health</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-year">2023<span class="badge">AI Curriculum</span></div>
+        <div class="timeline-content">
+          <h4>AI for Oral and Dental Healthcare — Core Education Curriculum</h4>
+          <p>Consensus curriculum from the IADR e‑Oral Health Network and ITU/WHO Focus Group defining essential learning outcomes for dental AI education. Four domains — concepts, use cases, evaluation, ethics.</p>
+          <div class="meta"><span>J. Dent · Schwendicke et al.</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-year">2024<span class="badge">WHO</span></div>
+        <div class="timeline-content">
+          <h4>Bangkok Declaration — signed for Latvia</h4>
+          <p>Prof. Maldupa represented Latvia at the WHO Global Oral Health Meeting in Bangkok, signing the Declaration endorsed by 100+ member states — "no health without oral health."</p>
+          <div class="meta"><span>WHO · Bangkok 2024</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-year">2025<span class="badge">Legislation</span></div>
+        <div class="timeline-content">
+          <h4>Sugar Taxation Policy Brief</h4>
+          <p>Economic evidence linking sugar consumption to caries, diabetes, CVD, and healthcare costs. Incorporated into the Ministry of Health Action Plan 2025–2029; sugar taxation identified as priority. Legislative consideration for the 2026 budget.</p>
+          <div class="meta"><span>RSU Institute of Public Health</span><span>Action plan 2025–29</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-year">2025<span class="badge">FDI</span></div>
+        <div class="timeline-content">
+          <h4>FDI White Paper — Artificial Intelligence for Dentistry</h4>
+          <p>Establishes global regulatory standards and ethical principles for AI in oral healthcare. Prof. Uribe on the working group. Addresses data protection, algorithmic bias, clinical safety, workforce implications.</p>
+          <div class="meta"><span>FDI World Dental Federation</span></div>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-year">2025<span class="badge">Standards</span></div>
+        <div class="timeline-content">
+          <h4>FDI Global Standards for Electronic Dental Records</h4>
+          <p>Interoperability framework for integrating dental &amp; medical EHRs. Co‑authored with Schwendicke, Walji, Lam, Tichy. Published in <em>International Dental Journal</em>, Dec 2025.</p>
+          <div class="meta"><span>Int. Dent. J. · FDI Consensus</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects" data-screen-label="05 Projects">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span>§ 04 — Active projects</span><span class="no">/ iv</span></div>
+      <h2 class="section-title">Funded research <em>with impact</em>.</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project">
+        <div class="acro"><span>EpiDentLatvia</span><span>2025–26</span></div>
+        <h4>Mapping the Epidemiological Profile of Oral Health in Latvian Children &amp; Adolescents</h4>
+        <div class="role">Uribe (PI) · Maldupa (Leading expert)</div>
+        <div class="dates">02/04/25 → 02/04/26 · epidentlatvia.lv</div>
+      </div>
+      <div class="project">
+        <div class="acro"><span>IEVA</span><span>2023–25</span></div>
+        <h4>Implementation of Evidence‑Based Paediatric Caries Management — an Evidence Transfer Study</h4>
+        <div class="role">Maldupa (PI) · Uribe (WP lead) · Innes, Marino (leading experts)</div>
+        <div class="dates">01/01/23 → 31/12/25 · Latvian Council of Science</div>
+      </div>
+      <div class="project">
+        <div class="acro"><span>ECON‑CARIES</span><span>2023–27</span></div>
+        <h4>Economic Evaluation for Evidence‑Based Paediatric Caries Management</h4>
+        <div class="role">Sļepcova (PI) · Maldupa &amp; Uribe (supervisors)</div>
+        <div class="dates">02/10/23 → 30/09/27 · PhD project</div>
+      </div>
+      <div class="project">
+        <div class="acro"><span>HBP‑SUSTAIN</span><span>2023–27</span></div>
+        <h4>Health behaviour strategies for sustainable oral health care in Latvia</h4>
+        <div class="role">Stāmere (PI) · Maldupa &amp; Uribe (supervisors)</div>
+        <div class="dates">02/10/23 → 30/09/27 · PhD project</div>
+      </div>
+      <div class="project">
+        <div class="acro"><span>CARIES‑AI</span><span>2021–22</span></div>
+        <h4>Diagnostic accuracy of AI systems for radiographic caries detection</h4>
+        <div class="role">Uribe (PI) · Radziņš (expert) · Maldupa (leading)</div>
+        <div class="dates">26/07/21 → 25/07/22 · RSU grants</div>
+      </div>
+      <div class="project">
+        <div class="acro"><span>ECC‑NON‑INV</span><span>2020–23</span></div>
+        <h4>Non‑invasive treatments for early childhood caries control</h4>
+        <div class="role">Maldupa (PI)</div>
+        <div class="dates">01/03/20 → 28/02/23 · ERDF · State Budget</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PEOPLE -->
+<section class="section" id="people" data-screen-label="06 People">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span>§ 05 — People</span><span class="no">/ v</span></div>
+      <h2 class="section-title">Team</h2>
+    </div>
+    <div class="people">
+      <article class="person">
+        <div class="portrait" data-label="Portrait — Dr. S. Uribe"></div>
+        <h4>Dr Sergio Uribe</h4>
+        <div class="title">Associate Professor · RSU</div>
+        <p class="bio">Associate Professor at Riga Stradiņš University and Visiting Professor at LMU Munich. Lead researcher at the Institute of Stomatology and Baltic Biomaterials Centre of Excellence (H2020 857287). Editorial boards: <em>JDR</em>, <em>Dental Traumatology</em>, <em>EAPD</em>. IADR Colgate Research in Prevention Award, 2007.</p>
+        <dl class="creds">
+          <dt>Education</dt>
+          <dd>DDS, MSc Oral &amp; Maxillofacial Radiology · U. Valparaíso</dd>
+          <dd>PhD Biomedical Sciences · U. Austral de Chile</dd>
+          <dt>Identifiers</dt>
+          <dd>ORCID 0000‑0003‑0684‑2025</dd>
+        </dl>
+        <div class="socials">
+          <a href="#">LinkedIn</a><a href="#">Bluesky</a><a href="#">X</a><a href="#">ORCID</a>
+        </div>
+      </article>
+
+      <article class="person">
+        <div class="portrait" data-label="Portrait — Dr. I. Maldupa"></div>
+        <h4>Dr Ilze Maldupa</h4>
+        <div class="title">Assistant Professor · RSU</div>
+        <p class="bio">Assistant Professor at RSU, specialist in Paediatric Dentistry at the Institute of Stomatology. Editorial boards: <em>BMC Oral Health</em>, <em>Dental Traumatology</em>, <em>Int. J. of Paediatric Dentistry</em>. RSU Resident of the Year, 2025. Represented Latvia at the WHO Bangkok Declaration signing, 2024.</p>
+        <dl class="creds">
+          <dt>Education</dt>
+          <dd>DDS · Riga Stradiņš University</dd>
+          <dd>BDS · Universidad de Chile</dd>
+          <dd>PhD Dental Science &amp; Post‑Doc · RSU</dd>
+          <dt>Identifiers</dt>
+          <dd>ORCID 0000‑0002‑5967‑956X</dd>
+        </dl>
+        <div class="socials">
+          <a href="#">LinkedIn</a><a href="#">Instagram</a><a href="#">X</a><a href="#">ORCID</a>
+        </div>
+      </article>
+    </div>
+
+    <div style="margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--ink);">
+      <div class="mast-meta" style="margin-bottom: 16px;">Doctoral Researchers · 2023–2027</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        <div>
+          <div style="font-family: var(--serif); font-size: 20px; font-weight: 500;">Olga Sļepcova</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-top: 4px;">ORCID 0000‑0002‑8723‑5464</div>
+        </div>
+        <div>
+          <div style="font-family: var(--serif); font-size: 20px; font-weight: 500;">Una Stāmere</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-top: 4px;">ORCID 0000‑0002‑7210‑1463</div>
+        </div>
+        <div>
+          <div style="font-family: var(--serif); font-size: 20px; font-weight: 500;">Rafael Garbim</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-top: 4px;">Visiting · USP 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="section" id="publications" data-screen-label="07 Publications">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span>§ 06 — Publications</span><span class="no">/ vi</span></div>
+      <h2 class="section-title">Recent <em>output</em>.</h2>
+    </div>
+
+    <div class="pubs-feed">
+      <div class="pub">
+        <div class="yr">2025</div>
+        <div>
+          <div class="title">Global Standards for Electronic Dental Records — integrating dental &amp; medical EHRs</div>
+          <div class="authors">Schwendicke F, Walji M, Lam W, Tichy A, Uribe SE.</div>
+        </div>
+        <div class="venue">Int. Dental J.</div>
+      </div>
+      <div class="pub">
+        <div class="yr">2025</div>
+        <div>
+          <div class="title">FDI World Dental Federation White Paper on Artificial Intelligence for Dentistry</div>
+          <div class="authors">FDI AI Working Group · Schwendicke F (lead), Uribe SE, et al.</div>
+        </div>
+        <div class="venue">FDI · White Paper</div>
+      </div>
+      <div class="pub">
+        <div class="yr">2023</div>
+        <div>
+          <div class="title">Child Dental Neglect and Legal Protections — a 26‑country policy compendium</div>
+          <div class="authors">Maldupa I, Uribe SE, et al.</div>
+        </div>
+        <div class="venue">Front. Oral Health</div>
+      </div>
+      <div class="pub">
+        <div class="yr">2023</div>
+        <div>
+          <div class="title">Artificial Intelligence for Oral and Dental Healthcare — Core Education Curriculum</div>
+          <div class="authors">Schwendicke F, et al. (Uribe SE among authors)</div>
+        </div>
+        <div class="venue">J. Dent.</div>
+      </div>
+      <div class="pub">
+        <div class="yr">2021</div>
+        <div>
+          <div class="title">Caries Prevalence and Severity for 12‑Year‑Old Children in Latvia</div>
+          <div class="authors">Maldupa I, Sopule A, Uribe SE, Brinkmane A, Senakola E.</div>
+        </div>
+        <div class="venue">Int. Dental J. 71(3)</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px; display: flex; gap: 12px;">
+      <a href="#" class="btn primary">View all on PubMed</a>
+      <a href="#" class="btn">Datasets (Zenodo)</a>
+      <a href="#" class="btn">RSU Dataverse</a>
+    </div>
+  </div>
+</section>
+
+<!-- DATA / OPEN SCIENCE STRIPE -->
+<section class="stripe" id="data" data-screen-label="08 Open Science">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom: 0;">
+      <div class="section-label"><span>§ 07 — Open science</span><span class="no">/ vii</span></div>
+      <h2 class="section-title">Every dataset, <em>open by default</em>.</h2>
+    </div>
+    <div class="stripe-links">
+      <div class="stripe-link">
+        <div class="k">Zenodo · 10.5281</div>
+        <h5>EpiDent Latvia 2025</h5>
+        <p>National survey data release — 12 &amp; 15‑y/o cohorts.</p>
+      </div>
+      <div class="stripe-link">
+        <div class="k">Zenodo · 2024</div>
+        <h5>IEVA Implementation Set</h5>
+        <p>Trial instruments, protocols, SAP.</p>
+      </div>
+      <div class="stripe-link">
+        <div class="k">RSU Dataverse</div>
+        <h5>Maldupa Collection</h5>
+        <p>Clinical datasets, code, annotated radiographs.</p>
+      </div>
+      <div class="stripe-link">
+        <div class="k">RSU Dataverse</div>
+        <h5>Uribe Collection</h5>
+        <p>AI models, validation sets, reproducibility packages.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h6>OralHealthResearch.LV</h6>
+        <p style="font-family: var(--serif); font-size: 17px; line-height: 1.45; max-width: 36ch;">
+          A research group at Riga Stradiņš University improving health through patient‑centred research and evidence implementation.
+        </p>
+        <p style="font-family: var(--mono); font-size: 11px; margin-top: 20px; letter-spacing: 0.04em; color: var(--ink-soft); line-height: 1.6;">
+          Dzirciema iela 20, office 248<br>
+          Rīga, Latvia · LV‑1007<br>
+          <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1c6f796e7b757332696e757e795c6e6f6932706a">[email&#160;protected]</a>
+        </p>
+      </div>
+      <div>
+        <h6>Navigate</h6>
+        <ul>
+          <li><a href="#thesis">Thesis</a></li>
+          <li><a href="#work">What we do</a></li>
+          <li><a href="#policy">Policy impact</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#people">People</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>Related</h6>
+        <ul>
+          <li><a href="https://www.bernuzobi.lv">Bernuzobi.lv</a></li>
+          <li><a href="https://www.epidentlatvia.lv">EpiDent Latvia</a></li>
+          <li><a href="https://bbcentre.eu">Baltic Biomaterials</a></li>
+          <li><a href="https://dentalresearch.substack.com">Blog</a></li>
+          <li><a href="#">The Dental Research Lab (Podcast)</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>Teaching</h6>
+        <ul>
+          <li><a href="#">Intro Clinical Research</a></li>
+          <li><a href="#">Advanced Clinical Research</a></li>
+          <li><a href="#">Short Intro to EBD</a></li>
+          <li><a href="#">EBD Research (2 semesters)</a></li>
+          <li><a href="#">PhD Student Guide</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="colophon">
+      <span>© 2021–2026 · Oral Health Research LV · RSU</span>
+      <span>
+</span>
+      <span>Updated May 2026</span>
+    </div>
+  </div>
+</footer>
+
+<!-- TWEAKS -->
+<div id="tweaks">
+  <h6>Tweaks</h6>
+  <div class="row">
+    <label>Palette</label>
+    <div class="opts" data-tweak="theme">
+      <button data-val="ink" class="active"><span class="swatch" style="background:#1A1714"></span>Ink</button>
+      <button data-val="clinical"><span class="swatch" style="background:#0E1A2B"></span>Clinical</button>
+      <button data-val="forest"><span class="swatch" style="background:#1A2118"></span>Forest</button>
+    </div>
+  </div>
+  <div class="row">
+    <label>Typography</label>
+    <div class="opts" data-tweak="type">
+      <button data-val="serif" class="active">Serif</button>
+      <button data-val="sans">Sans</button>
+    </div>
+  </div>
+  <div class="row">
+    <label>Accent intensity</label>
+    <input type="range" id="accent-range" min="0" max="100" value="52" style="width:100%; accent-color: var(--accent);">
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/*EDITMODE-BEGIN*/
+const TWEAK_DEFAULTS = {
+  "theme": "ink",
+  "type": "serif",
+  "accentHue": 25
+};
+/*EDITMODE-END*/
+
+// ====== Scatter chart (Caries vs GDP) ======
+(function drawChart() {
+  const host = document.getElementById('chart1');
+  if (!host) return;
+  const W = 1000, H = 380, pad = { l: 56, r: 24, t: 16, b: 44 };
+  // data: [label, GDP-per-capita-thousands, DMFT, highlighted]
+  const data = [
+    ["DK", 68, 0.4, false], ["SE", 60, 0.7, false], ["NL", 58, 0.8, false],
+    ["DE", 52, 1.1, false], ["UK", 46, 1.2, false], ["FR", 44, 1.5, false],
+    ["FI", 55, 1.0, false], ["EE", 30, 2.0, false], ["LT", 26, 2.6, false],
+    ["LV", 24, 4.4, true], ["PL", 22, 3.2, false], ["HU", 21, 3.0, false],
+    ["RO", 17, 3.8, false], ["BG", 14, 4.1, false], ["PT", 28, 1.9, false],
+    ["ES", 32, 1.1, false], ["IT", 38, 1.0, false], ["IE", 74, 0.9, false],
+    ["NO", 82, 0.6, false], ["CH", 88, 0.5, false], ["US", 70, 1.3, false],
+    ["JP", 40, 1.2, false], ["KR", 34, 1.7, false], ["AU", 58, 0.8, false],
+    ["CL", 16, 3.1, false], ["TR", 12, 3.7, false], ["BR", 9, 2.9, false],
+    ["MX", 11, 3.4, false]
+  ];
+  const xMin = 5, xMax = 95;
+  const yMin = 0, yMax = 5;
+  const x = v => pad.l + (v - xMin) / (xMax - xMin) * (W - pad.l - pad.r);
+  const y = v => pad.t + (1 - (v - yMin) / (yMax - yMin)) * (H - pad.t - pad.b);
+
+  const accent = getComputedStyle(document.body).getPropertyValue('--accent').trim();
+  const ink = '#1A1714';
+
+  // Trend line (approx)
+  const trend = [];
+  for (let g = xMin; g <= xMax; g += 2) {
+    const t = Math.max(0.2, 5.2 - 0.72 * Math.log(g));
+    trend.push([g, t]);
+  }
+  const trendPath = trend.map((p,i) => (i===0?'M':'L') + x(p[0]) + ',' + y(p[1])).join(' ');
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  // grid
+  for (let v = 0; v <= 5; v++) {
+    svg += `<line x1="${pad.l}" x2="${W-pad.r}" y1="${y(v)}" y2="${y(v)}" stroke="${ink}" stroke-opacity="0.12" stroke-width="1"/>`;
+    svg += `<text x="${pad.l-10}" y="${y(v)+4}" fill="${ink}" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="end">${v.toFixed(1)}</text>`;
+  }
+  for (let g = 10; g <= 90; g += 20) {
+    svg += `<line x1="${x(g)}" x2="${x(g)}" y1="${pad.t}" y2="${H-pad.b}" stroke="${ink}" stroke-opacity="0.08"/>`;
+    svg += `<text x="${x(g)}" y="${H-pad.b+18}" fill="${ink}" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">$${g}k</text>`;
+  }
+  // axes
+  svg += `<line x1="${pad.l}" x2="${pad.l}" y1="${pad.t}" y2="${H-pad.b}" stroke="${ink}" stroke-width="1"/>`;
+  svg += `<line x1="${pad.l}" x2="${W-pad.r}" y1="${H-pad.b}" y2="${H-pad.b}" stroke="${ink}" stroke-width="1"/>`;
+  // axis labels
+  svg += `<text x="${pad.l}" y="${pad.t-4}" fill="${ink}" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">DMFT ↑ WORSE</text>`;
+  svg += `<text x="${W-pad.r}" y="${H-8}" fill="${ink}" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1" text-anchor="end">GDP PER CAPITA (USD, THOUSANDS) →</text>`;
+  // trend
+  svg += `<path d="${trendPath}" fill="none" stroke="${ink}" stroke-opacity="0.4" stroke-dasharray="2,4" stroke-width="1"/>`;
+  // points
+  data.forEach(d => {
+    const [lab, gdp, dmft, hi] = d;
+    const cx = x(gdp), cy = y(dmft);
+    if (hi) {
+      svg += `<circle cx="${cx}" cy="${cy}" r="14" fill="${accent}" fill-opacity="0.15"/>`;
+      svg += `<circle cx="${cx}" cy="${cy}" r="6" fill="${accent}" stroke="${accent}" stroke-width="1"/>`;
+      svg += `<text x="${cx+10}" y="${cy-8}" fill="${accent}" font-family="Source Serif 4, serif" font-size="14" font-style="italic" font-weight="500">Latvia</text>`;
+      svg += `<text x="${cx+10}" y="${cy+6}" fill="${accent}" font-family="JetBrains Mono, monospace" font-size="10">D3MFT 4.4 · age 15</text>`;
+    } else {
+      svg += `<circle cx="${cx}" cy="${cy}" r="3.5" fill="${ink}" fill-opacity="0.7"/>`;
+      svg += `<text x="${cx+6}" y="${cy+3}" fill="${ink}" fill-opacity="0.6" font-family="JetBrains Mono, monospace" font-size="9">${lab}</text>`;
+    }
+  });
+  svg += `</svg>`;
+  host.innerHTML = svg;
+})();
+
+// ====== Fade in ======
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => e.isIntersecting && e.target.classList.add('in'));
+}, { threshold: 0.08 });
+document.querySelectorAll('.section, .hero').forEach(el => { el.classList.add('fade-in'); io.observe(el); });
+
+// ====== Tweaks ======
+const tweaksEl = document.getElementById('tweaks');
+function applyTweaks(state) {
+  document.body.dataset.theme = state.theme;
+  document.body.dataset.type = state.type;
+  if (state.accentHue !== undefined) {
+    document.documentElement.style.setProperty('--accent', `oklch(0.52 0.17 ${state.accentHue})`);
+  }
+  // sync buttons
+  document.querySelectorAll('#tweaks .opts').forEach(grp => {
+    const key = grp.dataset.tweak;
+    grp.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.val === state[key]));
+  });
+}
+let tweakState = { ...TWEAK_DEFAULTS };
+applyTweaks(tweakState);
+
+document.querySelectorAll('#tweaks .opts button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const key = btn.parentElement.dataset.tweak;
+    tweakState[key] = btn.dataset.val;
+    applyTweaks(tweakState);
+    window.parent.postMessage({type: '__edit_mode_set_keys', edits: { [key]: btn.dataset.val }}, '*');
+    // redraw chart since accent may have changed
+    setTimeout(() => {
+      const host = document.getElementById('chart1');
+      if (host) host.innerHTML = '';
+      location.hash && (location.hash = location.hash);
+    }, 50);
+  });
+});
+document.getElementById('accent-range').addEventListener('input', e => {
+  const hue = +e.target.value * 3.6;
+  tweakState.accentHue = hue;
+  applyTweaks(tweakState);
+  window.parent.postMessage({type: '__edit_mode_set_keys', edits: { accentHue: hue }}, '*');
+});
+
+// Edit-mode protocol
+window.addEventListener('message', e => {
+  if (!e.data || typeof e.data !== 'object') return;
+  if (e.data.type === '__activate_edit_mode') tweaksEl.classList.add('visible');
+  if (e.data.type === '__deactivate_edit_mode') tweaksEl.classList.remove('visible');
+});
+window.parent.postMessage({type: '__edit_mode_available'}, '*');
+</script>
+</body>
+</html>
